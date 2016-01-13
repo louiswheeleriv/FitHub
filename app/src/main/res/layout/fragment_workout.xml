@@ -1,0 +1,108 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground"
+    tools:context="com.louiswheeleriv.fithub.WorkoutFragment">
+
+    <!-- Base workout fragment view -->
+    <LinearLayout android:id="@+id/linear_workout_base"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView android:text="@string/title_workout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            style="@style/fragmentTitle"/>
+
+        <Button android:id="@+id/button_create_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            style="@style/orangeButton"
+            android:text="@string/create_exercise"/>
+
+        <Button android:id="@+id/button_log_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            style="@style/orangeButton"
+            android:text="@string/log_exercise"/>
+
+    </LinearLayout>
+
+    <!-- Create exercise view -->
+    <LinearLayout android:id="@+id/linear_workout_create_exercise"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:visibility="gone">
+
+        <TextView android:text="@string/title_workout_create_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            style="@style/fragmentTitle"/>
+
+        <TextView android:text="@string/text_exercise_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/mediumWhiteText"/>
+
+        <EditText android:id="@+id/edit_text_exercise_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:textColor="@color/black"
+            android:background="@color/white"/>
+
+        <TextView android:text="@string/text_exercise_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/mediumWhiteText"/>
+
+        <Spinner android:id="@+id/spinner_exercise_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/spinner_custom_style"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:entries="@array/exercise_types">
+
+        </Spinner>
+
+        <Button android:id="@+id/button_create_exercise_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_create_exercise_finish"
+            style="@style/orangeButton"/>
+
+
+    </LinearLayout>
+
+    <!-- Log exercise view -->
+    <LinearLayout android:id="@+id/linear_workout_log_exercise"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:visibility="gone">
+
+    </LinearLayout>
+
+</FrameLayout>

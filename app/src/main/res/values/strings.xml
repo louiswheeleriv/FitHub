@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">FitHub</string>
+
+    <string name="title_home">Home</string>
+
+    <string name="title_workout">Workout</string>
+    <string name="title_workout_create_exercise">Create Exercise</string>
+    <string name="text_exercise_name">Exercise Name</string>
+    <string name="text_exercise_type">Exercise Type</string>
+    <string-array name="exercise_types">
+        <item>Weight Training</item>
+        <item>Cardio</item>
+        <item>Body Exercise</item>
+    </string-array>
+    <string name="text_create_exercise_finish">Create Exercise</string>
+
+    <string name="title_analysis">Analysis</string>
+
+    <string name="title_goals">Goals</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="create_exercise">Create Exercise Type</string>
+    <string name="log_exercise">Log Exercise</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
