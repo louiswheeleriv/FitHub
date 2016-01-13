@@ -1,4 +1,4 @@
-package com.louiswheeleriv.fithub;
+package com.louiswheeleriv.fithub.objects;
 
 import java.util.Date;
 

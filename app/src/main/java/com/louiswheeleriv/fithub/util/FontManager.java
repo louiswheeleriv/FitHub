@@ -1,4 +1,4 @@
-package com.louiswheeleriv.fithub;
+package com.louiswheeleriv.fithub.util;
 
 import android.graphics.Typeface;
 import android.content.Context;

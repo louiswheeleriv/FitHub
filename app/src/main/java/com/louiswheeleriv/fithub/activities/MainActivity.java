@@ -1,5 +1,7 @@
-package com.louiswheeleriv.fithub;
+package com.louiswheeleriv.fithub.activities;
 
+import com.louiswheeleriv.fithub.R;
+import com.louiswheeleriv.fithub.fragments.*;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.net.Uri;
+
+import com.louiswheeleriv.fithub.fragments.AnalysisFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
                                                                HomeFragment.OnFragmentInteractionListener,

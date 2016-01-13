@@ -1,4 +1,4 @@
-package com.louiswheeleriv.fithub;
+package com.louiswheeleriv.fithub.objects;
 
 import java.util.List;
 import java.util.Date;
@@ -9,26 +9,23 @@ public class WeightExercise {
     private Exercise exercise;
     private Date date;
     private int numReps;
-    private int numSets;
     private int weight;
 
     public WeightExercise() {}
 
-    public WeightExercise(int id, Exercise exercise, Date date, int numReps, int numSets, int weight) {
+    public WeightExercise(int id, Exercise exercise, Date date, int numReps, int weight) {
         this.id = id;
         this.exercise = exercise;
         this.date = date;
         this.numReps = numReps;
-        this.numSets = numSets;
         this.weight = weight;
 
     }
 
-    public WeightExercise(Exercise exercise, Date date, int numReps, int numSets, int weight) {
+    public WeightExercise(Exercise exercise, Date date, int numReps, int weight) {
         this.exercise = exercise;
         this.date = date;
         this.numReps = numReps;
-        this.numSets = numSets;
         this.weight = weight;
 
     }
@@ -63,14 +60,6 @@ public class WeightExercise {
 
     public void setNumReps(int numReps) {
         this.numReps = numReps;
-    }
-
-    public int getNumSets() {
-        return numSets;
-    }
-
-    public void setNumSets(int numSets) {
-        this.numSets = numSets;
     }
 
     public int getWeight() {

@@ -1,5 +1,6 @@
-package com.louiswheeleriv.fithub;
+package com.louiswheeleriv.fithub.util;
 
+import com.louiswheeleriv.fithub.objects.Exercise;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +36,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_EXERCISE_ID = "exercise_id";
     private static final String KEY_DATE = "date";
     private static final String KEY_NUM_REPS = "num_reps";
-    private static final String KEY_NUM_SETS = "num_sets";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_DISTANCE = "distance";
     private static final String KEY_DURATION = "duration";
@@ -60,7 +60,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_WEIGHT_EXERCISES_TABLE = "CREATE TABLE " + TABLE_WEIGHT_EXERCISES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
                 + KEY_DATE + " DATE NOT NULL, " + KEY_NUM_REPS + " INTEGER NOT NULL, "
-                + KEY_NUM_SETS + " INTEGER NOT NULL, " + KEY_WEIGHT + " INTEGER NOT NULL" + ")";
+                + KEY_WEIGHT + " INTEGER NOT NULL" + ")";
 
         String CREATE_CARDIO_EXERCISES_TABLE = "CREATE TABLE " + TABLE_CARDIO_EXERCISES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "

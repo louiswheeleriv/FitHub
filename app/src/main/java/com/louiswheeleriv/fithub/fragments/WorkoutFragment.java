@@ -1,5 +1,8 @@
-package com.louiswheeleriv.fithub;
+package com.louiswheeleriv.fithub.fragments;
 
+import com.louiswheeleriv.fithub.R;
+import com.louiswheeleriv.fithub.util.*;
+import com.louiswheeleriv.fithub.objects.*;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
