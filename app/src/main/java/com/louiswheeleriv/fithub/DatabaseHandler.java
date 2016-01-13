@@ -31,7 +31,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_MUSCLES_USED = "muscles_used";
     private static final String KEY_EXERCISE_TYPE = "exercise_type";
     private static final String KEY_EXERCISE_ID = "exercise_id";
     private static final String KEY_DATE = "date";
@@ -56,20 +55,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_EXERCISES_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_MUSCLES_USED + " TEXT, " + KEY_EXERCISE_TYPE + " TEXT" + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_EXERCISE_TYPE + " TEXT" + ")";
 
         String CREATE_WEIGHT_EXERCISES_TABLE = "CREATE TABLE " + TABLE_WEIGHT_EXERCISES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
                 + KEY_DATE + " DATE NOT NULL, " + KEY_NUM_REPS + " INTEGER NOT NULL, "
                 + KEY_NUM_SETS + " INTEGER NOT NULL, " + KEY_WEIGHT + " INTEGER NOT NULL" + ")";
 
-        String CREATE_CARDIO_EXERCISES_TABLE = "CREATE TABLE " + TABLE_WEIGHT_EXERCISES + "("
+        String CREATE_CARDIO_EXERCISES_TABLE = "CREATE TABLE " + TABLE_CARDIO_EXERCISES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
                 + KEY_DATE + " DATE NOT NULL, " + KEY_DISTANCE + " INTEGER NOT NULL, "
                 + KEY_DURATION + " INTEGER NOT NULL, " + KEY_INCLINATION + " INTEGER NOT NULL, "
                 + KEY_RESISTANCE + " INTEGER NOT NULL" + ")";
 
-        String CREATE_BODY_EXERCISES_TABLE = "CREATE TABLE " + TABLE_WEIGHT_EXERCISES + "("
+        String CREATE_BODY_EXERCISES_TABLE = "CREATE TABLE " + TABLE_BODY_EXERCISES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
                 + KEY_DATE + " DATE NOT NULL, " + KEY_NUM_REPS + " INTEGER NOT NULL, "
                 + KEY_DURATION + " INTEGER NOT NULL" + ")";
@@ -105,63 +104,57 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * Functions for Exercise
 	 */
 
-    /*
-
-    public void addExercise(HabitType habitType){
+    public void addExercise(Exercise exercise) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, habitType.getName());
-        values.put(KEY_GOODHABIT, habitType.isGoodHabit());
+        values.put(KEY_NAME, exercise.getName());
+        values.put(KEY_EXERCISE_TYPE, exercise.getExerciseType());
 
-        db.insert(TABLE_HABITTYPES, null, values);
+        db.insert(TABLE_EXERCISES, null, values);
         db.close();
     }
 
-    public HabitType getHabitType(int id){
+    public Exercise getExercise(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_HABITTYPES, new String[] {KEY_ID, KEY_NAME, KEY_GOODHABIT}, KEY_ID + "=?",
+        Cursor cursor = db.query(TABLE_EXERCISES, new String[] {KEY_ID, KEY_NAME, KEY_EXERCISE_TYPE}, KEY_ID + "=?",
                 new String[] {String.valueOf(id)}, null, null, null, null);
 
-        if(cursor != null)
+        if (cursor != null) {
             cursor.moveToFirst();
-
-        int habitTypeId = cursor.getInt(0);
-        String name = cursor.getString(1);
-        boolean goodHabit = true;
-        if(cursor.getInt(2) == 0){
-            goodHabit = false;
         }
 
-        HabitType habitType = new HabitType(habitTypeId, name, goodHabit);
+        int exerciseId = cursor.getInt(0);
+        String name = cursor.getString(1);
+        String exerciseType = cursor.getString(2);
+
+        Exercise exercise = new Exercise(exerciseId, name, exerciseType);
         db.close();
-        return habitType;
+        return exercise;
     }
 
-    public List<HabitType> getAllHabitTypes(){
-        List<HabitType> habitTypeList = new ArrayList<HabitType>();
+    public List<Exercise> getAllExercises() {
+        List<Exercise> exerciseList = new ArrayList<Exercise>();
 
-        String selectQuery = "SELECT * FROM " + TABLE_HABITTYPES;
+        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if(cursor.moveToFirst()){
-            do{
-                HabitType habitType = new HabitType();
-                habitType.setId(Integer.parseInt(cursor.getString(0)));
-                habitType.setName(cursor.getString(1));
-                habitTypeList.add(habitType);
-            }while(cursor.moveToNext());
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise exercise = new Exercise(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+                exerciseList.add(exercise);
+            } while(cursor.moveToNext());
         }
 
         db.close();
-        return habitTypeList;
+        return exerciseList;
     }
 
-    public int getHabitTypesCount(){
-        String countQuery = "SELECT * FROM " + TABLE_HABITTYPES;
+    public int getExerciseCount(){
+        String countQuery = "SELECT * FROM " + TABLE_EXERCISES;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
@@ -169,50 +162,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public int updateHabitType(HabitType habitType){
+    public int updateExercise(Exercise exercise){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, habitType.getName());
+        values.put(KEY_NAME, exercise.getName());
+        values.put(KEY_EXERCISE_TYPE, exercise.getExerciseType());
 
-        return db.update(TABLE_HABITTYPES, values, KEY_ID + " = ?",
-                new String[] {String.valueOf(habitType.getId())});
+        return db.update(TABLE_EXERCISES, values, KEY_ID + " = ?",
+                new String[] {String.valueOf(exercise.getId())});
     }
 
-    public int deleteHabitType(HabitType habitType){
+    public int deleteExercise(Exercise exercise){
         SQLiteDatabase db = this.getWritableDatabase();
-        int numAffected = db.delete(TABLE_HABITTYPES, KEY_ID + " = ?", new String[] {String.valueOf(habitType.getId())});
+        int numAffected = db.delete(TABLE_EXERCISES, KEY_ID + " = ?", new String[] {String.valueOf(exercise.getId())});
         db.close();
         return numAffected;
     }
 
-    public int deleteHabitTypeByName(String name){
+    public int deleteExerciseByName(String name){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor typeCursor = db.query(TABLE_HABITTYPES, new String[] {KEY_ID, KEY_NAME}, KEY_NAME + " = ?",
+        Cursor typeCursor = db.query(TABLE_EXERCISES, new String[] {KEY_ID, KEY_NAME}, KEY_NAME + " = ?",
                 new String[] {name}, null, null, null, null);
         typeCursor.moveToFirst();
-        int habitTypeId = -1;
+        int exerciseId = -1;
         try {
-            habitTypeId = typeCursor.getInt(0);
+            exerciseId = typeCursor.getInt(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        int numAffected = db.delete(TABLE_HABITTYPES, KEY_NAME + " = ?", new String[] {name});
-        db.delete(TABLE_HABITS, KEY_HABITTYPE_ID + " = ?", new String[] {String.valueOf(habitTypeId)});
-        db.delete(TABLE_GOALS, KEY_HABITTYPE_ID + " = ?", new String[] {String.valueOf(habitTypeId)});
+        int numAffected = db.delete(TABLE_EXERCISES, KEY_NAME + " = ?", new String[] {name});
+        db.delete(TABLE_WEIGHT_EXERCISES, KEY_EXERCISE_ID + " = ?", new String[] {String.valueOf(exerciseId)});
+        db.delete(TABLE_CARDIO_EXERCISES, KEY_EXERCISE_ID + " = ?", new String[] {String.valueOf(exerciseId)});
+        db.delete(TABLE_BODY_EXERCISES, KEY_EXERCISE_ID + " = ?", new String[] {String.valueOf(exerciseId)});
+        db.delete(TABLE_GOALS, KEY_EXERCISE_ID + " = ?", new String[] {String.valueOf(exerciseId)});
         db.close();
         return numAffected;
     }
 
-    public void deleteAllHabitTypes(){
-        List<HabitType> habitTypeList = getAllHabitTypes();
-        for(HabitType ht : habitTypeList){
-            deleteHabitType(ht);
+    public void deleteAllExercises(){
+        List<Exercise> exerciseList = getAllExercises();
+        for(Exercise exercise : exerciseList){
+            deleteExercise(exercise);
         }
     }
-
-    */
 
 }

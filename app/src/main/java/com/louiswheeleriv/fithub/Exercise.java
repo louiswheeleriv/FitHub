@@ -6,21 +6,18 @@ public class Exercise {
 
     private int id;
     private String name;
-    private List<String> musclesUsed;
     private String exerciseType;
 
     public Exercise() {}
 
-    public Exercise(int id, String name, List<String> musclesUsed, String exerciseType) {
+    public Exercise(int id, String name, String exerciseType) {
         this.id = id;
         this.name = name;
-        this.musclesUsed = musclesUsed;
         this.exerciseType = exerciseType;
     }
 
-    public Exercise(String name, List<String> musclesUsed, String exerciseType) {
+    public Exercise(String name, String exerciseType) {
         this.name = name;
-        this.musclesUsed = musclesUsed;
         this.exerciseType = exerciseType;
     }
 
@@ -40,20 +37,17 @@ public class Exercise {
         this.name = name;
     }
 
-    public List<String> getMusclesUsed() {
-        return this.musclesUsed;
-    }
-
-    public void setMusclesUsed(List<String> musclesUsed) {
-        this.musclesUsed = musclesUsed;
-    }
-
     public String getExerciseType() {
         return this.exerciseType;
     }
 
     public void setExerciseType(String exerciseType) {
         this.exerciseType = exerciseType;
+    }
+
+    @Override
+    public String toString() {
+        return (name + " - " + exerciseType);
     }
 
 }

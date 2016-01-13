@@ -13,6 +13,7 @@ import android.net.Uri;
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
                                                                HomeFragment.OnFragmentInteractionListener,
                                                                WorkoutFragment.OnFragmentInteractionListener,
+                                                               CreateExerciseFragment.OnFragmentInteractionListener,
                                                                AnalysisFragment.OnFragmentInteractionListener,
                                                                GoalsFragment.OnFragmentInteractionListener {
 

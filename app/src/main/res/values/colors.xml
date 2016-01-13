@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="appBackground" type="color">#222944</item>
+    <item name="darkBlue" type="color">#222944</item>
     <item name="black" type="color">#000000</item>
     <item name="white" type="color">#ffffff</item>
-    <item name="lightGray" type="color">#999999</item>
+    <item name="gray" type="color">#999999</item>
+    <item name="lightGray" type="color">#dddddd</item>
     <item name="orange" type="color">#e65c00</item>
 </resources>
