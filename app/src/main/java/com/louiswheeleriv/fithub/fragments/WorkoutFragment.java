@@ -17,8 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import java.util.List;
 import android.graphics.Typeface;
-
-
+import android.widget.ListView;
+import android.database.Cursor;
 
 public class WorkoutFragment extends ListFragment {
 
@@ -44,10 +44,10 @@ public class WorkoutFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View inflatedView = inflater.inflate(R.layout.fragment_workout, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_workout, container, false);
 
         Typeface iconFont = FontManager.getTypeface(getActivity().getApplicationContext(), FontManager.FONTAWESOME);
-        FontManager.markAsIconContainer(inflatedView.findViewById(R.id.button_create_exercise), iconFont);
+        FontManager.markAsIconContainer(rootView.findViewById(R.id.button_create_exercise), iconFont);
 
         // Populate listview with exercises
         db = new DatabaseHandler(getActivity());
@@ -56,7 +56,7 @@ public class WorkoutFragment extends ListFragment {
         setListAdapter(allExercisesAdapter);
 
         // Create exercise button listener
-        Button createExerciseButton = (Button) inflatedView.findViewById(R.id.button_create_exercise);
+        Button createExerciseButton = (Button) rootView.findViewById(R.id.button_create_exercise);
         createExerciseButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -66,7 +66,21 @@ public class WorkoutFragment extends ListFragment {
         });
 
         // Return the inflated view
-        return inflatedView;
+        return rootView;
+    }
+
+    @Override
+    public void onListItemClick(ListView listView, View v, int position, long id) {
+        Fragment detailFragment = new ExerciseDetailFragment();
+        Bundle bundle = new Bundle();
+
+        Exercise selectedExercise = (Exercise) listView.getItemAtPosition(position);
+        String selectedExerciseId = String.valueOf(selectedExercise.getId());
+        bundle.putString("exerciseId", selectedExerciseId);
+        detailFragment.setArguments(bundle);
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, detailFragment).addToBackStack("fragment").commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

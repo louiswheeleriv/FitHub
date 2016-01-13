@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                                                                HomeFragment.OnFragmentInteractionListener,
                                                                WorkoutFragment.OnFragmentInteractionListener,
                                                                CreateExerciseFragment.OnFragmentInteractionListener,
+                                                               ExerciseDetailFragment.OnFragmentInteractionListener,
                                                                AnalysisFragment.OnFragmentInteractionListener,
                                                                GoalsFragment.OnFragmentInteractionListener {
 
