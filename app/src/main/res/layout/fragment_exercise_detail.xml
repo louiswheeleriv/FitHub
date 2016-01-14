@@ -16,13 +16,11 @@
             android:gravity="center"
             style="@style/fragmentTitle"/>
 
-        <CalendarView
+        <Button android:id="@+id/button_select_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-
-        </CalendarView>
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            style="@style/orangeButton"/>
 
     </LinearLayout>
 

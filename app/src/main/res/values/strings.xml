@@ -1,8 +1,12 @@
 <resources>
+
+    <!-- General app -->
     <string name="app_name">FitHub</string>
 
+    <!-- Home page -->
     <string name="title_home">Home</string>
 
+    <!-- Workout page -->
     <string name="title_workout">Workout</string>
     <string name="text_create_exercise">Create Exercise</string>
     <string name="button_text_create_exercise">&#xf067; Create Exercise</string>
@@ -15,16 +19,18 @@
     </string-array>
     <string name="text_create_exercise_finish">Create Exercise</string>
 
+    <!-- Analysis page -->
     <string name="title_analysis">Analysis</string>
 
+    <!-- Goals page -->
     <string name="title_goals">Goals</string>
 
+    <!-- Miscellaneous -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_example">Example action</string>
-
     <string name="action_settings">Settings</string>
+    <string name="text_close">Close</string>
 
     <!-- FontAwesome Icons -->
     <string name="fa_plus">&#xf067;</string>

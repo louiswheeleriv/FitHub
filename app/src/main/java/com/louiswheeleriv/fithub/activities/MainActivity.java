@@ -11,14 +11,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.net.Uri;
+import java.util.Date;
+import android.util.Log;
 
 import com.louiswheeleriv.fithub.fragments.AnalysisFragment;
+import com.louiswheeleriv.fithub.objects.Exercise;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
                                                                HomeFragment.OnFragmentInteractionListener,
                                                                WorkoutFragment.OnFragmentInteractionListener,
                                                                CreateExerciseFragment.OnFragmentInteractionListener,
                                                                ExerciseDetailFragment.OnFragmentInteractionListener,
+                                                               DatePickerFragment.DateSelectedListener,
                                                                AnalysisFragment.OnFragmentInteractionListener,
                                                                GoalsFragment.OnFragmentInteractionListener {
 
@@ -121,5 +125,19 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     }
 
     public void onFragmentInteraction(Uri uri) {}
+
+    public void onDateSelected(Date date, int exerciseId) {
+        Fragment detailFragment = new ExerciseDetailFragment();
+        Bundle bundle = new Bundle();
+
+        Log.d("DEBUG", "MainActivity, date: " + date.toString());
+
+        bundle.putInt("exerciseId", exerciseId);
+        bundle.putSerializable("dateSelected", date);
+        detailFragment.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, detailFragment).commit();
+    }
 
 }

@@ -75,8 +75,7 @@ public class WorkoutFragment extends ListFragment {
         Bundle bundle = new Bundle();
 
         Exercise selectedExercise = (Exercise) listView.getItemAtPosition(position);
-        String selectedExerciseId = String.valueOf(selectedExercise.getId());
-        bundle.putString("exerciseId", selectedExerciseId);
+        bundle.putInt("exerciseId", selectedExercise.getId());
         detailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
