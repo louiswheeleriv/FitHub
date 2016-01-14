@@ -1,24 +1,25 @@
 package com.louiswheeleriv.fithub.fragments;
 
-import com.louiswheeleriv.fithub.R;
-import com.louiswheeleriv.fithub.util.*;
-import com.louiswheeleriv.fithub.objects.*;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import java.util.List;
-import android.graphics.Typeface;
 import android.widget.ListView;
-import android.database.Cursor;
+
+import com.louiswheeleriv.fithub.R;
+import com.louiswheeleriv.fithub.objects.Exercise;
+import com.louiswheeleriv.fithub.util.DatabaseHandler;
+import com.louiswheeleriv.fithub.util.FontManager;
+
+import java.util.List;
 
 public class WorkoutFragment extends ListFragment {
 
@@ -79,7 +80,7 @@ public class WorkoutFragment extends ListFragment {
         detailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, detailFragment).addToBackStack("fragment").commit();
+        fragmentManager.beginTransaction().add(R.id.container, detailFragment).addToBackStack("fragment").commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

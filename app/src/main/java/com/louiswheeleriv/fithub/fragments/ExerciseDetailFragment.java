@@ -8,15 +8,14 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.louiswheeleriv.fithub.R;
-import com.louiswheeleriv.fithub.objects.*;
+import com.louiswheeleriv.fithub.objects.Exercise;
 import com.louiswheeleriv.fithub.util.DatabaseHandler;
 
 import java.util.Date;
-import android.widget.TextView;
-import android.widget.Button;
-import android.util.Log;
 
 public class ExerciseDetailFragment extends Fragment {
 

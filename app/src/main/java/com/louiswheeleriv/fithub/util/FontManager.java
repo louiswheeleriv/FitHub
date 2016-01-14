@@ -1,7 +1,7 @@
 package com.louiswheeleriv.fithub.util;
 
-import android.graphics.Typeface;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;

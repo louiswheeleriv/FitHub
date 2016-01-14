@@ -1,7 +1,5 @@
 package com.louiswheeleriv.fithub.objects;
 
-import java.util.List;
-
 public class Exercise {
 
     private int id;

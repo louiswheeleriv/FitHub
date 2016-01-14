@@ -1,8 +1,5 @@
 package com.louiswheeleriv.fithub.fragments;
 
-import com.louiswheeleriv.fithub.R;
-import com.louiswheeleriv.fithub.util.DatabaseHandler;
-import com.louiswheeleriv.fithub.objects.*;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.louiswheeleriv.fithub.R;
+import com.louiswheeleriv.fithub.objects.Exercise;
+import com.louiswheeleriv.fithub.util.DatabaseHandler;
 
 public class CreateExerciseFragment extends Fragment {
 

@@ -1,6 +1,5 @@
 package com.louiswheeleriv.fithub.objects;
 
-import java.util.List;
 import java.util.Date;
 
 public class WeightExercise {

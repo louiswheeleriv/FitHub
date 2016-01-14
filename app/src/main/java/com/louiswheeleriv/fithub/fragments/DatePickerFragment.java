@@ -6,13 +6,12 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 
 import com.louiswheeleriv.fithub.R;
 
-import android.widget.Button;
-import android.widget.DatePicker;
 import java.util.Date;
-import android.util.Log;
 
 public class DatePickerFragment extends DialogFragment {
 
@@ -50,7 +49,7 @@ public class DatePickerFragment extends DialogFragment {
         // Set the selected date for the date picker
         DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.datePicker);
         datePicker.updateDate(
-                (dateSelected.getYear()+1900),
+                (dateSelected.getYear() + 1900),
                 dateSelected.getMonth(),
                 dateSelected.getDate()
         );

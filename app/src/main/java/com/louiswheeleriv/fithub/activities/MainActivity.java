@@ -1,21 +1,27 @@
 package com.louiswheeleriv.fithub.activities;
 
-import com.louiswheeleriv.fithub.R;
-import com.louiswheeleriv.fithub.fragments.*;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.widget.DrawerLayout;
-import android.net.Uri;
-import java.util.Date;
-import android.util.Log;
 
+import com.louiswheeleriv.fithub.R;
 import com.louiswheeleriv.fithub.fragments.AnalysisFragment;
-import com.louiswheeleriv.fithub.objects.Exercise;
+import com.louiswheeleriv.fithub.fragments.CreateExerciseFragment;
+import com.louiswheeleriv.fithub.fragments.DatePickerFragment;
+import com.louiswheeleriv.fithub.fragments.ExerciseDetailFragment;
+import com.louiswheeleriv.fithub.fragments.GoalsFragment;
+import com.louiswheeleriv.fithub.fragments.HomeFragment;
+import com.louiswheeleriv.fithub.fragments.NavigationDrawerFragment;
+import com.louiswheeleriv.fithub.fragments.WorkoutFragment;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
                                                                HomeFragment.OnFragmentInteractionListener,
