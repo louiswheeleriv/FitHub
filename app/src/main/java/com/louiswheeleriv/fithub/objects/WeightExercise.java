@@ -2,7 +2,7 @@ package com.louiswheeleriv.fithub.objects;
 
 import java.util.Date;
 
-public class WeightExercise {
+public class WeightExercise extends ExerciseInstance {
 
     private int id;
     private Exercise exercise;
@@ -10,23 +10,25 @@ public class WeightExercise {
     private int numReps;
     private int weight;
 
-    public WeightExercise() {}
-
     public WeightExercise(int id, Exercise exercise, Date date, int numReps, int weight) {
+        super(id, exercise, date);
         this.id = id;
         this.exercise = exercise;
         this.date = date;
         this.numReps = numReps;
         this.weight = weight;
-
     }
 
     public WeightExercise(Exercise exercise, Date date, int numReps, int weight) {
+        super(exercise, date);
         this.exercise = exercise;
         this.date = date;
         this.numReps = numReps;
         this.weight = weight;
+    }
 
+    public String toString() {
+        return (weight + " lbs x " + numReps);
     }
 
     public int getId() {

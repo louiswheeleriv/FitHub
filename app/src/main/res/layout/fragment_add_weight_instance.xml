@@ -1,0 +1,37 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.louiswheeleriv.fithub.fragments.AddWeightInstanceFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView android:id="@+id/textView_create_weight_instance_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText android:id="@+id/editText_create_weight_instance_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText android:id="@+id/editText_create_weight_instance_numReps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_gravity="center_horizontal" />
+
+        <Button android:id="@+id/button_create_weight_instance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/orangeButton"/>
+
+    </LinearLayout>
+
+</FrameLayout>

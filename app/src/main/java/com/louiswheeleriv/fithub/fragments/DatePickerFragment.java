@@ -47,20 +47,32 @@ public class DatePickerFragment extends DialogFragment {
         final View rootView = inflater.inflate(R.layout.fragment_date_picker, container, false);
 
         // Set the selected date for the date picker
-        DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.datePicker);
+        final DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.datePicker);
         datePicker.updateDate(
                 (dateSelected.getYear() + 1900),
                 dateSelected.getMonth(),
                 dateSelected.getDate()
         );
 
+        // Handle click for today button
+        Button todayButton = (Button) rootView.findViewById(R.id.button_select_today);
+        todayButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                Date today = new Date();
+                datePicker.updateDate(
+                        (today.getYear() + 1900),
+                        today.getMonth(),
+                        today.getDate()
+                );
+            }
+        });
+
         // Handle click for close button
         Button closeButton = (Button) rootView.findViewById(R.id.button_close_dialog);
         closeButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                DatePicker datePicker = (DatePicker) rootView.findViewById(R.id.datePicker);
                 dateSelected = new Date(
-                        datePicker.getYear()-1900,
+                        (datePicker.getYear()-1900),
                         datePicker.getMonth(),
                         datePicker.getDayOfMonth()
                 );

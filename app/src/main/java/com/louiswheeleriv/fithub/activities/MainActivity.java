@@ -12,14 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.louiswheeleriv.fithub.R;
-import com.louiswheeleriv.fithub.fragments.AnalysisFragment;
-import com.louiswheeleriv.fithub.fragments.CreateExerciseFragment;
-import com.louiswheeleriv.fithub.fragments.DatePickerFragment;
-import com.louiswheeleriv.fithub.fragments.ExerciseDetailFragment;
-import com.louiswheeleriv.fithub.fragments.GoalsFragment;
-import com.louiswheeleriv.fithub.fragments.HomeFragment;
-import com.louiswheeleriv.fithub.fragments.NavigationDrawerFragment;
-import com.louiswheeleriv.fithub.fragments.WorkoutFragment;
+import com.louiswheeleriv.fithub.fragments.*;
+import com.louiswheeleriv.fithub.objects.WeightExercise;
 
 import java.util.Date;
 
@@ -29,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                                                                CreateExerciseFragment.OnFragmentInteractionListener,
                                                                ExerciseDetailFragment.OnFragmentInteractionListener,
                                                                DatePickerFragment.DateSelectedListener,
+                                                               AddWeightInstanceFragment.WeightInstanceCreatedListener,
                                                                AnalysisFragment.OnFragmentInteractionListener,
                                                                GoalsFragment.OnFragmentInteractionListener {
 
@@ -144,6 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, detailFragment).commit();
+    }
+
+    public void onWeightInstanceCreated(WeightExercise we) {
+
     }
 
 }

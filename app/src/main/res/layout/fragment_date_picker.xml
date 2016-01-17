@@ -6,13 +6,30 @@
     <DatePicker android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="100dp"
         android:layout_gravity="center_horizontal" />
 
-    <Button android:id="@+id/button_close_dialog"
+    <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/text_close"/>
+        android:layout_gravity="bottom">
+
+        <Button android:id="@+id/button_select_today"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:text="@string/text_today"
+            style="@style/orangeButton"/>
+
+        <Button android:id="@+id/button_close_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:text="@string/text_close"
+            style="@style/orangeButton"/>
+
+    </LinearLayout>
 
 </FrameLayout>

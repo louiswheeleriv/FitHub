@@ -81,6 +81,16 @@ public class CreateExerciseFragment extends Fragment {
                 String exName = exerciseNameEditText.getText().toString();
                 String exType = exerciseTypeSpinner.getSelectedItem().toString();
 
+                String[] types = getActivity().getResources().getStringArray(R.array.exercise_types);
+
+                if (exType.equals(types[0])) {
+                    exType = getActivity().getResources().getString(R.string.const_weight_exercise);
+                } else if (exType.equals(types[1])) {
+                    exType = getActivity().getResources().getString(R.string.const_cardio_exercise);
+                } else {
+                    exType = getActivity().getResources().getString(R.string.const_body_exercise);
+                }
+
                 Exercise exercise = new Exercise(exName, exType);
                 db.addExercise(exercise);
 

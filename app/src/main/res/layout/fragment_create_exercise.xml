@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkBlue"
-    tools:context="com.louiswheeleriv.fithub.CreateExerciseFragment">
+    tools:context="com.louiswheeleriv.fithub.fragments.CreateExerciseFragment">
 
     <LinearLayout
         android:orientation="vertical"

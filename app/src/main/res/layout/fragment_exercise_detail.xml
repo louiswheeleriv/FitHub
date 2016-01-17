@@ -22,6 +22,24 @@
             android:layout_margin="20dp"
             style="@style/orangeButton"/>
 
+        <Button android:id="@+id/button_log_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/text_log_data"
+            style="@style/orangeButton"/>
+
+        <ListView android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            style="@style/list_item_exercise_style"/>
+
+        <Button android:id="@+id/button_delete_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete"/>
+
     </LinearLayout>
 
 </FrameLayout>

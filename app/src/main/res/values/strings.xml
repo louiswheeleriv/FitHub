@@ -19,6 +19,9 @@
     </string-array>
     <string name="text_create_exercise_finish">Create Exercise</string>
 
+    <!-- Exercise Detail page -->
+    <string name="text_log_data">Log Data</string>
+
     <!-- Analysis page -->
     <string name="title_analysis">Analysis</string>
 
@@ -30,11 +33,19 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="text_today">Today</string>
     <string name="text_close">Close</string>
 
     <!-- FontAwesome Icons -->
     <string name="fa_plus">&#xf067;</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- Java constants -->
+    <string name="const_weight_exercise">weight_exercise</string>
+    <string name="const_cardio_exercise">cardio_exercise</string>
+    <string name="const_body_exercise">body_exercise</string>
+    <string name="arg_exercise_id">exerciseId</string>
+    <string name="arg_date_selected">dateSelected</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
