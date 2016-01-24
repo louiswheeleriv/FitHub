@@ -19,6 +19,7 @@ import com.louiswheeleriv.fithub.objects.Exercise;
 import com.louiswheeleriv.fithub.util.DatabaseHandler;
 import com.louiswheeleriv.fithub.util.FontManager;
 
+import java.util.Date;
 import java.util.List;
 
 public class WorkoutFragment extends ListFragment {
@@ -77,6 +78,7 @@ public class WorkoutFragment extends ListFragment {
 
         Exercise selectedExercise = (Exercise) listView.getItemAtPosition(position);
         bundle.putInt("exerciseId", selectedExercise.getId());
+        bundle.putSerializable("dateSelected", new Date());
         detailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

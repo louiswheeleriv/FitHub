@@ -43,12 +43,12 @@ public class BodyExerciseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if (vi == null) {
-            vi = inflater.inflate(R.layout.list_item_weight, null);
+            vi = inflater.inflate(R.layout.list_item_body, null);
         }
         TextView textViewNumReps = (TextView) vi.findViewById(R.id.list_item_num_reps);
         TextView textViewDuration = (TextView) vi.findViewById(R.id.list_item_duration);
-        textViewNumReps.setText(data.get(position).getNumReps());
-        textViewDuration.setText(data.get(position).getDuration());
+        textViewNumReps.setText(String.valueOf(data.get(position).getNumReps()));
+        textViewDuration.setText(String.valueOf(data.get(position).getDuration()));
         return vi;
     }
 

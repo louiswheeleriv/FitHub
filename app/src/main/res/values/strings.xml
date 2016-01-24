@@ -21,6 +21,15 @@
 
     <!-- Exercise Detail page -->
     <string name="text_log_data">Log Data</string>
+    <string name="text_no_data">No data</string>
+    <string name="fieldname_weight_weight">Weight</string>
+    <string name="fieldname_weight_numReps"># Reps</string>
+    <string name="fieldname_cardio_distance">Distance</string>
+    <string name="fieldname_cardio_duration">Duration</string>
+    <string name="fieldname_cardio_incline">Incline</string>
+    <string name="fieldname_cardio_resistance">Resistance</string>
+    <string name="fieldname_body_numReps"># Reps</string>
+    <string name="fieldname_body_duration">Duration</string>
 
     <!-- Analysis page -->
     <string name="title_analysis">Analysis</string>
@@ -35,6 +44,7 @@
     <string name="action_settings">Settings</string>
     <string name="text_today">Today</string>
     <string name="text_close">Close</string>
+    <string name="text_cancel">Cancel</string>
 
     <!-- FontAwesome Icons -->
     <string name="fa_plus">&#xf067;</string>
@@ -45,6 +55,8 @@
     <string name="const_body_exercise">body_exercise</string>
     <string name="arg_exercise_id">exerciseId</string>
     <string name="arg_date_selected">dateSelected</string>
+    <string name="const_mi_to_km_mult">1.60934</string>
+    <string name="const_lb_to_kg_mult">0.4536</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -43,16 +43,33 @@ public class CardioExerciseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if (vi == null) {
-            vi = inflater.inflate(R.layout.list_item_weight, null);
+            vi = inflater.inflate(R.layout.list_item_cardio, null);
         }
         TextView textViewDistance = (TextView) vi.findViewById(R.id.list_item_distance);
         TextView textViewDuration = (TextView) vi.findViewById(R.id.list_item_duration);
         TextView textViewInclination = (TextView) vi.findViewById(R.id.list_item_inclination);
         TextView textViewResistance = (TextView) vi.findViewById(R.id.list_item_resistance);
-        textViewDistance.setText(data.get(position).getDistance());
-        textViewDuration.setText(data.get(position).getDuration());
-        textViewInclination.setText(data.get(position).getInclination());
-        textViewResistance.setText(data.get(position).getResistance());
+
+        textViewDistance.setText(String.valueOf(data.get(position).getDistance()) + " mi");
+
+        int duration = data.get(position).getDuration();
+        int hours = (duration / 3600);
+        int minutes = ((duration % 3600) / 60);
+        int seconds = (duration % 60);
+        String hoursString = String.valueOf(hours);
+        String minutesString = (hours > 0 && minutes < 10) ? ("0"+String.valueOf(minutes)) : String.valueOf(minutes);
+        String secondsString = ((hours > 0 || minutes > 0) && seconds < 10) ? ("0"+String.valueOf(seconds)) : String.valueOf(seconds);
+
+        if (hours > 0) {
+            textViewDuration.setText(hoursString + ":" + minutesString + ":" + secondsString);
+        } else if (minutes > 0) {
+            textViewDuration.setText(minutesString + ":" + secondsString);
+        } else {
+            textViewDuration.setText(secondsString + " sec");
+        }
+        textViewInclination.setText(String.valueOf(data.get(position).getInclination()));
+        textViewResistance.setText(String.valueOf(data.get(position).getResistance()));
+
         return vi;
     }
 

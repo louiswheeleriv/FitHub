@@ -8,16 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.louiswheeleriv.fithub.R;
 import com.louiswheeleriv.fithub.objects.Exercise;
-import com.louiswheeleriv.fithub.objects.WeightExercise;
+import com.louiswheeleriv.fithub.objects.BodyExercise;
 import com.louiswheeleriv.fithub.util.DatabaseHandler;
 
 import java.util.Date;
 
-public class AddWeightInstanceFragment extends DialogFragment {
+public class AddBodyInstanceFragment extends DialogFragment {
 
     private static final String ARG_DATE_SELECTED = "dateSelected";
     private static final String ARG_EXERCISE_ID = "exerciseId";
@@ -29,14 +28,14 @@ public class AddWeightInstanceFragment extends DialogFragment {
 
     private DatabaseHandler db;
 
-    private WeightInstanceCreatedListener mListener;
+    private BodyInstanceCreatedListener mListener;
 
-    public static AddWeightInstanceFragment newInstance() {
-        AddWeightInstanceFragment fragment = new AddWeightInstanceFragment();
+    public static AddBodyInstanceFragment newInstance() {
+        AddBodyInstanceFragment fragment = new AddBodyInstanceFragment();
         return fragment;
     }
 
-    public AddWeightInstanceFragment() {
+    public AddBodyInstanceFragment() {
         // Required empty public constructor
     }
 
@@ -52,40 +51,33 @@ public class AddWeightInstanceFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_add_weight_instance, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_add_body_instance, container, false);
 
         db = new DatabaseHandler(getActivity());
 
-        // Populate the exercise variable
-        exercise = db.getExercise(exerciseId);
-
-        // Populate textview with exercise name
-        TextView textViewExerciseName = (TextView) rootView.findViewById(R.id.textView_create_weight_instance_name);
-        textViewExerciseName.setText(exercise.getName());
-
         // Handle click for log button
-        Button logButton = (Button) rootView.findViewById(R.id.button_create_weight_instance);
+        Button logButton = (Button) rootView.findViewById(R.id.button_create_body_instance);
         logButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                EditText editTextWeight = (EditText) rootView.findViewById(R.id.editText_create_weight_instance_weight);
-                EditText editTextNumReps = (EditText) rootView.findViewById(R.id.editText_create_weight_instance_numReps);
+                EditText editTextNumReps = (EditText) rootView.findViewById(R.id.editText_create_body_instance_numReps);
+                EditText editTextDuration = (EditText) rootView.findViewById(R.id.editText_create_body_instance_duration);
 
-                int weight = Integer.parseInt(editTextWeight.getText().toString());
                 int numReps = Integer.parseInt(editTextNumReps.getText().toString());
+                int duration = Integer.parseInt(editTextDuration.getText().toString());
 
                 exercise = db.getExercise(exerciseId);
 
-                WeightExercise we = new WeightExercise(exercise, dateSelected, numReps, weight);
-                db.addWeightExercise(we);
+                BodyExercise be = new BodyExercise(exercise, dateSelected, numReps, duration);
+                db.addBodyExercise(be);
 
-                WeightInstanceCreatedListener activity = (WeightInstanceCreatedListener) getActivity();
-                activity.onWeightInstanceCreated(we, dateSelected, exerciseId);
+                BodyInstanceCreatedListener activity = (BodyInstanceCreatedListener) getActivity();
+                activity.onBodyInstanceCreated(be, dateSelected, exerciseId);
                 dismiss();
             }
         });
 
         // Handle click for cancel button
-        Button cancelButton = (Button) rootView.findViewById(R.id.button_create_weight_instance_cancel);
+        Button cancelButton = (Button) rootView.findViewById(R.id.button_create_body_instance_cancel);
         cancelButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 dismiss();
@@ -99,9 +91,9 @@ public class AddWeightInstanceFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (WeightInstanceCreatedListener) activity;
+            mListener = (BodyInstanceCreatedListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement WeightInstanceCreatedListener");
+            throw new ClassCastException(activity.toString() + " must implement BodyInstanceCreatedListener");
         }
     }
 
@@ -111,7 +103,7 @@ public class AddWeightInstanceFragment extends DialogFragment {
         mListener = null;
     }
 
-    public interface WeightInstanceCreatedListener {
-        void onWeightInstanceCreated(WeightExercise we, Date dateSelected, int exerciseId);
+    public interface BodyInstanceCreatedListener {
+        void onBodyInstanceCreated(BodyExercise be, Date dateSelected, int exerciseId);
     }
 }

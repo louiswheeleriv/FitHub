@@ -13,6 +13,8 @@ import android.view.MenuItem;
 
 import com.louiswheeleriv.fithub.R;
 import com.louiswheeleriv.fithub.fragments.*;
+import com.louiswheeleriv.fithub.objects.BodyExercise;
+import com.louiswheeleriv.fithub.objects.CardioExercise;
 import com.louiswheeleriv.fithub.objects.WeightExercise;
 
 import java.util.Date;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                                                                ExerciseDetailFragment.OnFragmentInteractionListener,
                                                                DatePickerFragment.DateSelectedListener,
                                                                AddWeightInstanceFragment.WeightInstanceCreatedListener,
+                                                               AddCardioInstanceFragment.CardioInstanceCreatedListener,
+                                                               AddBodyInstanceFragment.BodyInstanceCreatedListener,
                                                                AnalysisFragment.OnFragmentInteractionListener,
                                                                GoalsFragment.OnFragmentInteractionListener {
 
@@ -127,22 +131,32 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public void onFragmentInteraction(Uri uri) {}
 
-    public void onDateSelected(Date date, int exerciseId) {
+    public void onDateSelected(Date dateSelected, int exerciseId) {
+        openExerciseDetailFragment(dateSelected, exerciseId);
+    }
+
+    public void onWeightInstanceCreated(WeightExercise we, Date dateSelected, int exerciseId) {
+        openExerciseDetailFragment(dateSelected, exerciseId);
+    }
+
+    public void onCardioInstanceCreated(CardioExercise ce, Date dateSelected, int exerciseId) {
+        openExerciseDetailFragment(dateSelected, exerciseId);
+    }
+
+    public void onBodyInstanceCreated(BodyExercise be, Date dateSelected, int exerciseId) {
+        openExerciseDetailFragment(dateSelected, exerciseId);
+    }
+
+    public void openExerciseDetailFragment(Date dateSelected, int exerciseId) {
         Fragment detailFragment = new ExerciseDetailFragment();
         Bundle bundle = new Bundle();
 
-        Log.d("DEBUG", "MainActivity, date: " + date.toString());
-
         bundle.putInt("exerciseId", exerciseId);
-        bundle.putSerializable("dateSelected", date);
+        bundle.putSerializable("dateSelected", dateSelected);
         detailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, detailFragment).commit();
-    }
-
-    public void onWeightInstanceCreated(WeightExercise we) {
-
     }
 
 }

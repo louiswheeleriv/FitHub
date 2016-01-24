@@ -7,21 +7,29 @@
     <TextView android:id="@+id/list_item_distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        style="@style/list_item_exercise_style"/>
 
     <TextView android:id="@+id/list_item_duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        style="@style/list_item_exercise_style"/>
 
     <TextView android:id="@+id/list_item_inclination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        style="@style/list_item_exercise_style"/>
 
     <TextView android:id="@+id/list_item_resistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        style="@style/list_item_exercise_style"/>
 
 </LinearLayout>

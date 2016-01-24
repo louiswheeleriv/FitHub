@@ -46,13 +46,12 @@ public class WeightExerciseAdapter extends BaseAdapter {
         if (vi == null) {
             vi = inflater.inflate(R.layout.list_item_weight, null);
         }
-        TextView textViewWeightAndNumReps = (TextView) vi.findViewById(R.id.list_item_weight_and_numReps);
-        String textViewLabel = (
-                String.valueOf(data.get(position).getNumReps() + " x "
-                + String.valueOf(data.get(position).getWeight() + " lbs"))
-        );
-        textViewWeightAndNumReps.setText(textViewLabel);
-        textViewWeightAndNumReps.setTypeface(null, Typeface.BOLD);
+
+        TextView textViewWeight = (TextView) vi.findViewById(R.id.list_item_weight_weight);
+        TextView textViewNumReps = (TextView) vi.findViewById(R.id.list_item_weight_numReps);
+        textViewWeight.setText(data.get(position).getWeight() + " lbs");
+        textViewNumReps.setText(data.get(position).getNumReps() + "x");
+
         return vi;
     }
 

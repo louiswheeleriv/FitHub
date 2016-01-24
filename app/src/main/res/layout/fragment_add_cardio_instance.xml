@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.louiswheeleriv.fithub.fragments.AddWeightInstanceFragment">
+    tools:context="com.louiswheeleriv.fithub.fragments.AddCardioInstanceFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:paddingRight="15dp"
         android:orientation="vertical">
 
-        <TextView android:id="@+id/textView_create_weight_instance_name"
+        <TextView android:id="@+id/textView_create_cardio_instance_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
@@ -32,9 +32,9 @@
                 android:paddingRight="15dp"
                 android:gravity="right"
                 android:textColor="@color/black"
-                android:text="@string/fieldname_weight_weight"/>
+                android:text="@string/fieldname_cardio_distance"/>
 
-            <EditText android:id="@+id/editText_create_weight_instance_weight"
+            <EditText android:id="@+id/editText_create_cardio_instance_distance"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -58,9 +58,61 @@
                 android:paddingRight="15dp"
                 android:gravity="right"
                 android:textColor="@color/black"
-                android:text="@string/fieldname_weight_numReps"/>
+                android:text="@string/fieldname_cardio_duration"/>
 
-            <EditText android:id="@+id/editText_create_weight_instance_numReps"
+            <EditText android:id="@+id/editText_create_cardio_instance_duration"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:inputType="number"
+                android:ems="10"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp"
+                android:paddingRight="15dp"
+                android:gravity="right"
+                android:textColor="@color/black"
+                android:text="@string/fieldname_cardio_incline"/>
+
+            <EditText android:id="@+id/editText_create_cardio_instance_incline"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:inputType="number"
+                android:ems="10"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp"
+                android:paddingRight="15dp"
+                android:gravity="right"
+                android:textColor="@color/black"
+                android:text="@string/fieldname_cardio_resistance"/>
+
+            <EditText android:id="@+id/editText_create_cardio_instance_resistance"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -76,7 +128,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button android:id="@+id/button_create_weight_instance_cancel"
+            <Button android:id="@+id/button_create_cardio_instance_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -84,7 +136,7 @@
                 android:text="@string/text_cancel"
                 style="@style/grayButton"/>
 
-            <Button android:id="@+id/button_create_weight_instance"
+            <Button android:id="@+id/button_create_cardio_instance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"

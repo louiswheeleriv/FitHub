@@ -16,28 +16,134 @@
             android:gravity="center"
             style="@style/fragmentTitle"/>
 
-        <Button android:id="@+id/button_select_date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            style="@style/orangeButton"/>
+            android:orientation="horizontal">
 
-        <Button android:id="@+id/button_log_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="@string/text_log_data"
-            style="@style/orangeButton"/>
+            <Button android:id="@+id/button_select_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                style="@style/orangeButton"/>
 
-        <ListView android:id="@android:id/list"
+            <Button android:id="@+id/button_log_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:text="@string/text_log_data"
+                style="@style/orangeButton"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            style="@style/list_item_exercise_style"/>
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <!-- Instance list headers -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView android:id="@+id/textview_header_weight_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_weight_weight"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_weight_numReps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_weight_numReps"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_cardio_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_cardio_distance"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_cardio_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_cardio_duration"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_cardio_incline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_cardio_incline"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_cardio_resistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_cardio_resistance"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_body_numReps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_body_numReps"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+                <TextView android:id="@+id/textview_header_body_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fieldname_body_duration"
+                    android:visibility="gone"
+                    style="@style/list_header_exercise_style"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black"/>
+
+            <TextView android:id="@+id/textview_no_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/lightGray"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:text="@string/text_no_data"
+                android:visibility="gone"/>
+
+            <ListView android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/listview_exercise_style"/>
+
+        </LinearLayout>
 
         <Button android:id="@+id/button_delete_exercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:text="Delete"/>
 
     </LinearLayout>

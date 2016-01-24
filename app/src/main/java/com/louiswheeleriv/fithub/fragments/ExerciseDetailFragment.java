@@ -21,7 +21,6 @@ import com.louiswheeleriv.fithub.util.*;
 import java.util.Date;
 import java.util.List;
 
-import com.louiswheeleriv.fithub.fragments.AddWeightInstanceFragment;
 import com.louiswheeleriv.fithub.objects.*;
 
 public class ExerciseDetailFragment extends ListFragment {
@@ -82,26 +81,37 @@ public class ExerciseDetailFragment extends ListFragment {
         exercise = db.getExercise(exerciseId);
 
         Resources resources = getResources();
-        String weightType = resources.getString(R.string.const_weight_exercise);
-        String cardioType = resources.getString(R.string.const_cardio_exercise);
-        String bodyType = resources.getString(R.string.const_body_exercise);
+        final String weightType = resources.getString(R.string.const_weight_exercise);
+        final String cardioType = resources.getString(R.string.const_cardio_exercise);
+        final String bodyType = resources.getString(R.string.const_body_exercise);
+
+        boolean hasData = false;
 
         // Get the list of existing ExerciseInstance objects for this type/date
         if (exercise.getExerciseType().equals(weightType)) {
 
-            weightExerciseList = db.getWeightExercisesByExerciseId(exerciseId);
+            weightExerciseList = db.getWeightExercisesByExerciseIdDate(exerciseId, dateSelected);
             exerciseType = weightType;
+            hasData = (!weightExerciseList.isEmpty());
 
         } else if (exercise.getExerciseType().equals(cardioType)) {
 
-            cardioExerciseList = db.getCardioExercisesByExerciseId(exerciseId);
+            cardioExerciseList = db.getCardioExercisesByExerciseIdDate(exerciseId, dateSelected);
             exerciseType = cardioType;
+            hasData = (!cardioExerciseList.isEmpty());
 
         } else if (exercise.getExerciseType().equals(bodyType)) {
 
-            bodyExerciseList = db.getBodyExercisesByExerciseId(exerciseId);
+            bodyExerciseList = db.getBodyExercisesByExerciseIdDate(exerciseId, dateSelected);
             exerciseType = bodyType;
+            hasData = (!bodyExerciseList.isEmpty());
 
+        }
+
+        // If no data, display no data text
+        if (!hasData) {
+            TextView textViewNoData = (TextView) rootView.findViewById(R.id.textview_no_data);
+            textViewNoData.setVisibility(View.VISIBLE);
         }
 
         // Display the selected exercise name
@@ -112,12 +122,26 @@ public class ExerciseDetailFragment extends ListFragment {
         if (exerciseType == weightType) {
             WeightExerciseAdapter listAdapter = new WeightExerciseAdapter(getActivity(), weightExerciseList);
             setListAdapter(listAdapter);
+
+            // Display weight headers
+            ((TextView) rootView.findViewById(R.id.textview_header_weight_weight)).setVisibility(View.VISIBLE);
+            ((TextView) rootView.findViewById(R.id.textview_header_weight_numReps)).setVisibility(View.VISIBLE);
         } else if (exerciseType == cardioType) {
             CardioExerciseAdapter listAdapter = new CardioExerciseAdapter(getActivity(), cardioExerciseList);
             setListAdapter(listAdapter);
+
+            // Display cardio headers
+            ((TextView) rootView.findViewById(R.id.textview_header_cardio_distance)).setVisibility(View.VISIBLE);
+            ((TextView) rootView.findViewById(R.id.textview_header_cardio_duration)).setVisibility(View.VISIBLE);
+            ((TextView) rootView.findViewById(R.id.textview_header_cardio_incline)).setVisibility(View.VISIBLE);
+            ((TextView) rootView.findViewById(R.id.textview_header_cardio_resistance)).setVisibility(View.VISIBLE);
         } else if (exerciseType == bodyType){
             BodyExerciseAdapter listAdapter = new BodyExerciseAdapter(getActivity(), bodyExerciseList);
             setListAdapter(listAdapter);
+
+            // Display body headers
+            ((TextView) rootView.findViewById(R.id.textview_header_body_numReps)).setVisibility(View.VISIBLE);
+            ((TextView) rootView.findViewById(R.id.textview_header_body_duration)).setVisibility(View.VISIBLE);
         }
 
         // Display the selected date on date selection button
@@ -146,14 +170,24 @@ public class ExerciseDetailFragment extends ListFragment {
         logButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                AddWeightInstanceFragment fragment = new AddWeightInstanceFragment();
 
                 Bundle bundle = new Bundle();
                 bundle.putInt(ARG_EXERCISE_ID, exerciseId);
                 bundle.putSerializable(ARG_DATE_SELECTED, dateSelected);
-                fragment.setArguments(bundle);
 
-                fragment.show(fm, "fragment_date_picker");
+                if (exerciseType == weightType) {
+                    AddWeightInstanceFragment fragment = new AddWeightInstanceFragment();
+                    fragment.setArguments(bundle);
+                    fragment.show(fm, "fragment_add_weight_instance");
+                } else if (exerciseType == cardioType) {
+                    AddCardioInstanceFragment fragment = new AddCardioInstanceFragment();
+                    fragment.setArguments(bundle);
+                    fragment.show(fm, "fragment_add_cardio_instance");
+                } else {
+                    AddBodyInstanceFragment fragment = new AddBodyInstanceFragment();
+                    fragment.setArguments(bundle);
+                    fragment.show(fm, "fragment_add_body_instance");
+                }
             }
         });
 
@@ -188,7 +222,7 @@ public class ExerciseDetailFragment extends ListFragment {
             case 11: return "Dec";
         }
 
-        return "OH DIP";
+        return "ERROR";
     }
 
     // TODO: Rename method, update argument and hook method into UI event

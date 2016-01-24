@@ -230,9 +230,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addWeightExercise(WeightExercise we) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String dateString = df.format(we.getDate());
+
         ContentValues values = new ContentValues();
         values.put(KEY_EXERCISE_ID, we.getExercise().getId());
-        values.put(KEY_DATE, we.getDate().toString());
+        values.put(KEY_DATE, dateString);
         values.put(KEY_NUM_REPS, we.getNumReps());
         values.put(KEY_WEIGHT, we.getWeight());
 
@@ -258,7 +261,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int instanceId = cursor.getInt(0);
         int exerciseId = cursor.getInt(1);
         Exercise exercise = getExercise(exerciseId);
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
         try {
             date = df.parse(cursor.getString(2));
@@ -293,7 +296,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 if (exercise == null) {
                     exercise = getExercise(exerciseId);
                 }
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(2));
+                } catch(ParseException e) {
+                    Log.e("ERROR", e.getMessage());
+                }
+                int numReps = cursor.getInt(3);
+                int weight = cursor.getInt(4);
+
+                WeightExercise we = new WeightExercise(instanceId, exercise, date, numReps, weight);
+
+                weightExerciseList.add(we);
+            } while(cursor.moveToNext());
+        }
+
+        db.close();
+        return weightExerciseList;
+    }
+
+    public List<WeightExercise> getWeightExercisesByExerciseIdDate(int exerciseId, Date dateSelected) {
+        Exercise exercise = null;
+        List<WeightExercise> weightExerciseList = new ArrayList<WeightExercise>();
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String dateString = df.format(dateSelected);
+
+        Log.d("DEBUG", "DB: querying with dateString ("+dateString+")");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_WEIGHT_EXERCISES,
+                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_NUM_REPS, KEY_WEIGHT},
+                KEY_EXERCISE_ID + " = ? AND " + KEY_DATE + " = ?",
+                new String[] {String.valueOf(exerciseId), dateString},
+                null, null, null, null
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                int instanceId = cursor.getInt(0);
+                if (exercise == null) {
+                    exercise = getExercise(exerciseId);
+                }
                 Date date = null;
                 try {
                     date = df.parse(cursor.getString(2));
@@ -327,7 +374,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 int instanceId = cursor.getInt(0);
                 Integer exerciseId = cursor.getInt(1);
                 Exercise exercise = (exercisesById.containsKey(exerciseId)) ? exercisesById.get(exerciseId) : getExercise(exerciseId);
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 Date date = null;
                 try {
                     date = df.parse(cursor.getString(2));
@@ -390,9 +437,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addCardioExercise(CardioExercise ce) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String dateString = df.format(ce.getDate());
+
         ContentValues values = new ContentValues();
         values.put(KEY_EXERCISE_ID, ce.getExercise().getId());
-        values.put(KEY_DATE, ce.getDate().toString());
+        values.put(KEY_DATE, dateString);
         values.put(KEY_DISTANCE, ce.getDistance());
         values.put(KEY_DURATION, ce.getDuration());
         values.put(KEY_INCLINATION, ce.getInclination());
@@ -420,7 +470,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int instanceId = cursor.getInt(0);
         int exerciseId = cursor.getInt(1);
         Exercise exercise = getExercise(exerciseId);
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
         try {
             date = df.parse(cursor.getString(2));
@@ -457,7 +507,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 if (exercise == null) {
                     exercise = getExercise(exerciseId);
                 }
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(2));
+                } catch(ParseException e) {
+                    Log.e("ERROR", e.getMessage());
+                }
+                int distance = cursor.getInt(3);
+                int duration = cursor.getInt(4);
+                int inclination = cursor.getInt(5);
+                int resistance = cursor.getInt(6);
+
+                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, inclination, resistance);
+
+                cardioExerciseList.add(ce);
+            } while(cursor.moveToNext());
+        }
+
+        db.close();
+        return cardioExerciseList;
+    }
+
+    public List<CardioExercise> getCardioExercisesByExerciseIdDate(int exerciseId, Date dateSelected) {
+        Exercise exercise = null;
+        List<CardioExercise> cardioExerciseList = new ArrayList<CardioExercise>();
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String dateString = df.format(dateSelected);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_CARDIO_EXERCISES,
+                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINATION, KEY_RESISTANCE},
+                KEY_EXERCISE_ID + " = ? AND " + KEY_DATE + " = ?",
+                new String[] {String.valueOf(exerciseId), dateString},
+                null, null, null, null
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                int instanceId = cursor.getInt(0);
+                if (exercise == null) {
+                    exercise = getExercise(exerciseId);
+                }
                 Date date = null;
                 try {
                     date = df.parse(cursor.getString(2));
@@ -493,7 +587,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 int instanceId = cursor.getInt(0);
                 Integer exerciseId = cursor.getInt(1);
                 Exercise exercise = (exercisesById.containsKey(exerciseId)) ? exercisesById.get(exerciseId) : getExercise(exerciseId);
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 Date date = null;
                 try {
                     date = df.parse(cursor.getString(2));
@@ -560,9 +654,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addBodyExercise(BodyExercise be) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String dateString = df.format(be.getDate());
+
         ContentValues values = new ContentValues();
         values.put(KEY_EXERCISE_ID, be.getExercise().getId());
-        values.put(KEY_DATE, be.getDate().toString());
+        values.put(KEY_DATE, dateString);
         values.put(KEY_NUM_REPS, be.getNumReps());
         values.put(KEY_DURATION, be.getDuration());
 
@@ -588,7 +685,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int instanceId = cursor.getInt(0);
         int exerciseId = cursor.getInt(1);
         Exercise exercise = getExercise(exerciseId);
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
         try {
             date = df.parse(cursor.getString(2));
@@ -623,7 +720,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 if (exercise == null) {
                     exercise = getExercise(exerciseId);
                 }
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(2));
+                } catch(ParseException e) {
+                    Log.e("ERROR", e.getMessage());
+                }
+                int numReps = cursor.getInt(3);
+                int duration = cursor.getInt(4);
+
+                BodyExercise be = new BodyExercise(instanceId, exercise, date, numReps, duration);
+
+                bodyExerciseList.add(be);
+            } while(cursor.moveToNext());
+        }
+
+        db.close();
+        return bodyExerciseList;
+    }
+
+    public List<BodyExercise> getBodyExercisesByExerciseIdDate(int exerciseId, Date dateSelected) {
+        Exercise exercise = null;
+        List<BodyExercise> bodyExerciseList = new ArrayList<BodyExercise>();
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        String dateString = df.format(dateSelected);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_BODY_EXERCISES,
+                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_NUM_REPS, KEY_DURATION},
+                KEY_EXERCISE_ID + " = ? AND " + KEY_DATE + " = ?",
+                new String[] {String.valueOf(exerciseId), dateString},
+                null, null, null, null
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                int instanceId = cursor.getInt(0);
+                if (exercise == null) {
+                    exercise = getExercise(exerciseId);
+                }
                 Date date = null;
                 try {
                     date = df.parse(cursor.getString(2));
@@ -657,7 +796,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 int instanceId = cursor.getInt(0);
                 Integer exerciseId = cursor.getInt(1);
                 Exercise exercise = (exercisesById.containsKey(exerciseId)) ? exercisesById.get(exerciseId) : getExercise(exerciseId);
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 Date date = null;
                 try {
                     date = df.parse(cursor.getString(2));
