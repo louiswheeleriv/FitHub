@@ -63,7 +63,7 @@ public class WorkoutFragment extends ListFragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 Fragment fragment = new CreateExerciseFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, fragment).addToBackStack("fragment").commit();
+                fragmentManager.beginTransaction().replace(R.id.container, fragment).addToBackStack("workout").commit();
             }
         });
 
@@ -82,7 +82,7 @@ public class WorkoutFragment extends ListFragment {
         detailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.container, detailFragment).addToBackStack("fragment").commit();
+        fragmentManager.beginTransaction().replace(R.id.container, detailFragment).addToBackStack("workout").commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

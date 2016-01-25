@@ -76,6 +76,18 @@ public class AddBodyInstanceFragment extends DialogFragment {
             }
         });
 
+        // Handle back button
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View view, int keyCode, android.view.KeyEvent event) {
+                if ((keyCode ==  android.view.KeyEvent.KEYCODE_BACK)) {
+                    dismiss();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
         // Handle click for cancel button
         Button cancelButton = (Button) rootView.findViewById(R.id.button_create_body_instance_cancel);
         cancelButton.setOnClickListener(new Button.OnClickListener() {

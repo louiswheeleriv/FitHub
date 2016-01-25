@@ -3,8 +3,10 @@ package com.louiswheeleriv.fithub.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,6 +83,18 @@ public class AddWeightInstanceFragment extends DialogFragment {
                 WeightInstanceCreatedListener activity = (WeightInstanceCreatedListener) getActivity();
                 activity.onWeightInstanceCreated(we, dateSelected, exerciseId);
                 dismiss();
+            }
+        });
+
+        // Handle back button
+        rootView.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View view, int keyCode, android.view.KeyEvent event) {
+                if ((keyCode ==  android.view.KeyEvent.KEYCODE_BACK)) {
+                    dismiss();
+                    return true;
+                } else {
+                    return false;
+                }
             }
         });
 

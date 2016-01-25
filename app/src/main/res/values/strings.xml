@@ -45,6 +45,7 @@
     <string name="text_today">Today</string>
     <string name="text_close">Close</string>
     <string name="text_cancel">Cancel</string>
+    <string name="text_back">Back</string>
 
     <!-- FontAwesome Icons -->
     <string name="fa_plus">&#xf067;</string>

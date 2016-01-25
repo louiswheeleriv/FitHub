@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).addToBackStack("fragment").commit();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
     }
 
     public void onSectionAttached(int number) {
