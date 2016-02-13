@@ -5,14 +5,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -44,7 +48,7 @@ public class CreateExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.fragment_create_exercise, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_create_exercise, container, false);
 
         db = new DatabaseHandler(getActivity());
 
@@ -74,12 +78,51 @@ public class CreateExerciseFragment extends Fragment {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         exerciseTypeSpinner.setAdapter(adapter);
 
+        // If "Cardio" spinner option selected, display extra options
+        final LinearLayout linearLayoutIncludeInclineResistance = (LinearLayout) rootView.findViewById(R.id.linearLayout_include_incline_resistance);
+        String[] listOptions = getResources().getStringArray(R.array.exercise_types);
+        int pos = -1;
+        for (int i = 0; i < listOptions.length; i++) {
+            if (listOptions[i].equals("Cardio")) {
+                pos = i;
+                break;
+            }
+        }
+        final int CARDIO_POS_IN_LIST = pos;
+
+        if (CARDIO_POS_IN_LIST > -1) {
+            exerciseTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                    if (pos == CARDIO_POS_IN_LIST) {
+                        linearLayoutIncludeInclineResistance.setVisibility(View.VISIBLE);
+                    } else {
+                        linearLayoutIncludeInclineResistance.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
+        }
+
         // Finish and save exercise button listener
         Button finishExerciseButton = (Button) rootView.findViewById(R.id.button_create_exercise_finish);
         finishExerciseButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 String exName = exerciseNameEditText.getText().toString();
                 String exType = exerciseTypeSpinner.getSelectedItem().toString();
+                boolean includesIncline;
+                boolean includesResistance;
+                if (exType.equals("Cardio")) {
+                    CheckBox checkboxIncludeIncline = (CheckBox) rootView.findViewById(R.id.checkbox_includes_incline);
+                    CheckBox checkboxIncludeResistance = (CheckBox) rootView.findViewById(R.id.checkbox_includes_resistance);
+                    includesIncline = checkboxIncludeIncline.isChecked();
+                    includesResistance = checkboxIncludeResistance.isChecked();
+                } else {
+                    includesIncline = false;
+                    includesResistance = false;
+                }
 
                 String[] types = getActivity().getResources().getStringArray(R.array.exercise_types);
 
@@ -91,7 +134,7 @@ public class CreateExerciseFragment extends Fragment {
                     exType = getActivity().getResources().getString(R.string.const_body_exercise);
                 }
 
-                Exercise exercise = new Exercise(exName, exType);
+                Exercise exercise = new Exercise(exName, exType, includesIncline, includesResistance);
                 db.addExercise(exercise);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

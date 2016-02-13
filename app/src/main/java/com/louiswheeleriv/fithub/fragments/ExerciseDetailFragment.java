@@ -133,8 +133,18 @@ public class ExerciseDetailFragment extends ListFragment {
             // Display cardio headers
             ((TextView) rootView.findViewById(R.id.textview_header_cardio_distance)).setVisibility(View.VISIBLE);
             ((TextView) rootView.findViewById(R.id.textview_header_cardio_duration)).setVisibility(View.VISIBLE);
-            ((TextView) rootView.findViewById(R.id.textview_header_cardio_incline)).setVisibility(View.VISIBLE);
-            ((TextView) rootView.findViewById(R.id.textview_header_cardio_resistance)).setVisibility(View.VISIBLE);
+
+            Log.d("DEBUG", "Checking incline and resistance");
+            Log.d("DEBUG", "incline? " + exercise.includesIncline());
+            Log.d("DEBUG", "resistance? " + exercise.includesResistance());
+            if (exercise.includesIncline()) {
+                Log.d("DEBUG", "Show incline header");
+                ((TextView) rootView.findViewById(R.id.textview_header_cardio_incline)).setVisibility(View.VISIBLE);
+            }
+            if (exercise.includesResistance()) {
+                Log.d("DEBUG", "Show resistance header");
+                ((TextView) rootView.findViewById(R.id.textview_header_cardio_resistance)).setVisibility(View.VISIBLE);
+            }
         } else if (exerciseType == bodyType){
             BodyExerciseAdapter listAdapter = new BodyExerciseAdapter(getActivity(), bodyExerciseList);
             setListAdapter(listAdapter);

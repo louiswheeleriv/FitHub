@@ -47,7 +47,7 @@ public class CardioExerciseAdapter extends BaseAdapter {
         }
         TextView textViewDistance = (TextView) vi.findViewById(R.id.list_item_distance);
         TextView textViewDuration = (TextView) vi.findViewById(R.id.list_item_duration);
-        TextView textViewInclination = (TextView) vi.findViewById(R.id.list_item_inclination);
+        TextView textViewIncline = (TextView) vi.findViewById(R.id.list_item_incline);
         TextView textViewResistance = (TextView) vi.findViewById(R.id.list_item_resistance);
 
         textViewDistance.setText(String.valueOf(data.get(position).getDistance()) + " mi");
@@ -67,8 +67,17 @@ public class CardioExerciseAdapter extends BaseAdapter {
         } else {
             textViewDuration.setText(secondsString + " sec");
         }
-        textViewInclination.setText(String.valueOf(data.get(position).getInclination()));
+        textViewIncline.setText(String.valueOf(data.get(position).getIncline()));
         textViewResistance.setText(String.valueOf(data.get(position).getResistance()));
+
+        // Hide incline and resistance headers if not included
+        if (!data.get(position).getExercise().includesIncline()) {
+            textViewIncline.setVisibility(View.GONE);
+        }
+
+        if (!data.get(position).getExercise().includesResistance()) {
+            textViewResistance.setVisibility(View.GONE);
+        }
 
         return vi;
     }

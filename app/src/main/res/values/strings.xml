@@ -12,6 +12,8 @@
     <string name="button_text_create_exercise">&#xf067; Create Exercise</string>
     <string name="text_exercise_name">Exercise Name</string>
     <string name="text_exercise_type">Exercise Type</string>
+    <string name="text_includes_incline">Track Incline?</string>
+    <string name="text_includes_resistance">Track Resistance?</string>
     <string-array name="exercise_types">
         <item>Weight Training</item>
         <item>Cardio</item>

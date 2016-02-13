@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.louiswheeleriv.fithub.R;
@@ -63,23 +64,45 @@ public class AddCardioInstanceFragment extends DialogFragment {
         TextView textViewExerciseName = (TextView) rootView.findViewById(R.id.textView_create_cardio_instance_name);
         textViewExerciseName.setText(exercise.getName());
 
+        // Hide incline and resistance inputs if not used
+        if (!exercise.includesIncline()) {
+            LinearLayout linearLayoutIncline = (LinearLayout) rootView.findViewById(R.id.linearLayout_create_cardio_instance_incline);
+            linearLayoutIncline.setVisibility(View.GONE);
+        }
+        if (!exercise.includesResistance()) {
+            LinearLayout linearLayoutResistance = (LinearLayout) rootView.findViewById(R.id.linearLayout_create_cardio_instance_resistance);
+            linearLayoutResistance.setVisibility(View.GONE);
+        }
+
         // Handle click for log button
         Button logButton = (Button) rootView.findViewById(R.id.button_create_cardio_instance);
         logButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 EditText editTextDistance = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_distance);
                 EditText editTextDuration = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_duration);
-                EditText editTextInclination = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_incline);
+                EditText editTextIncline = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_incline);
                 EditText editTextResistance = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_resistance);
 
                 double distance = Double.parseDouble(editTextDistance.getText().toString());
                 int duration = Integer.parseInt(editTextDuration.getText().toString());
-                int inclination = Integer.parseInt(editTextInclination.getText().toString());
-                int resistance = Integer.parseInt(editTextResistance.getText().toString());
+
+                int incline;
+                if (exercise.includesIncline()) {
+                    incline = Integer.parseInt(editTextIncline.getText().toString());
+                } else {
+                    incline = 0;
+                }
+
+                int resistance;
+                if (exercise.includesResistance()) {
+                    resistance = Integer.parseInt(editTextResistance.getText().toString());
+                } else {
+                    resistance = 0;
+                }
 
                 exercise = db.getExercise(exerciseId);
 
-                CardioExercise ce = new CardioExercise(exercise, dateSelected, distance, duration, inclination, resistance);
+                CardioExercise ce = new CardioExercise(exercise, dateSelected, distance, duration, incline, resistance);
                 db.addCardioExercise(ce);
 
                 CardioInstanceCreatedListener activity = (CardioInstanceCreatedListener) getActivity();

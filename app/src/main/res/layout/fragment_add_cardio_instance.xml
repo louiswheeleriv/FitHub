@@ -40,7 +40,7 @@
                 android:layout_marginBottom="15dp"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:ems="10"/>
 
         </LinearLayout>
@@ -71,7 +71,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/linearLayout_create_cardio_instance_incline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -97,7 +97,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/linearLayout_create_cardio_instance_resistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

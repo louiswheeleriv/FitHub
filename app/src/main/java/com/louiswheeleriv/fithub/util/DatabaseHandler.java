@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "fitHubDB";
 
     private static final String TABLE_EXERCISES = "exercises";
@@ -33,13 +33,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_EXERCISE_TYPE = "exercise_type";
+    private static final String KEY_INCLUDES_INCLINE = "includes_incline";
+    private static final String KEY_INCLUDES_RESISTANCE = "includes_resistance";
     private static final String KEY_EXERCISE_ID = "exercise_id";
     private static final String KEY_DATE = "date";
     private static final String KEY_NUM_REPS = "num_reps";
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_DISTANCE = "distance";
     private static final String KEY_DURATION = "duration";
-    private static final String KEY_INCLINATION = "inclination";
+    private static final String KEY_INCLINE = "incline";
     private static final String KEY_RESISTANCE = "resistance";
     private static final String KEY_TARGET_REPS = "target_reps";
     private static final String KEY_TARGET_WEIGHT = "target_weight";
@@ -54,29 +56,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_EXERCISES_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_EXERCISE_TYPE + " TEXT" + ")";
+        String CREATE_EXERCISES_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "(" +
+            KEY_ID + " INTEGER PRIMARY KEY, " +
+            KEY_NAME + " TEXT, " +
+            KEY_EXERCISE_TYPE + " TEXT, " +
+            KEY_INCLUDES_INCLINE + " INTEGER NOT NULL, " +
+            KEY_INCLUDES_RESISTANCE + " INTEGER NOT NULL" +
+        ")";
 
-        String CREATE_WEIGHT_EXERCISES_TABLE = "CREATE TABLE " + TABLE_WEIGHT_EXERCISES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
-                + KEY_DATE + " DATE NOT NULL, " + KEY_NUM_REPS + " INTEGER NOT NULL, "
-                + KEY_WEIGHT + " INTEGER NOT NULL" + ")";
+        String CREATE_WEIGHT_EXERCISES_TABLE = "CREATE TABLE " + TABLE_WEIGHT_EXERCISES + "(" +
+            KEY_ID + " INTEGER PRIMARY KEY, " +
+            KEY_EXERCISE_ID + " INTEGER NOT NULL, " +
+            KEY_DATE + " DATE NOT NULL, " +
+            KEY_NUM_REPS + " INTEGER NOT NULL, " +
+            KEY_WEIGHT + " INTEGER NOT NULL" +
+        ")";
 
-        String CREATE_CARDIO_EXERCISES_TABLE = "CREATE TABLE " + TABLE_CARDIO_EXERCISES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
-                + KEY_DATE + " DATE NOT NULL, " + KEY_DISTANCE + " INTEGER NOT NULL, "
-                + KEY_DURATION + " INTEGER NOT NULL, " + KEY_INCLINATION + " INTEGER NOT NULL, "
-                + KEY_RESISTANCE + " INTEGER NOT NULL" + ")";
+        String CREATE_CARDIO_EXERCISES_TABLE = "CREATE TABLE " + TABLE_CARDIO_EXERCISES + "(" +
+            KEY_ID + " INTEGER PRIMARY KEY, " +
+            KEY_EXERCISE_ID + " INTEGER NOT NULL, " +
+            KEY_DATE + " DATE NOT NULL, " +
+            KEY_DISTANCE + " REAL NOT NULL, " +
+            KEY_DURATION + " INTEGER NOT NULL, " +
+            KEY_INCLINE + " INTEGER NOT NULL, " +
+            KEY_RESISTANCE + " INTEGER NOT NULL" +
+        ")";
 
-        String CREATE_BODY_EXERCISES_TABLE = "CREATE TABLE " + TABLE_BODY_EXERCISES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_EXERCISE_ID + " INTEGER NOT NULL, "
-                + KEY_DATE + " DATE NOT NULL, " + KEY_NUM_REPS + " INTEGER NOT NULL, "
-                + KEY_DURATION + " INTEGER NOT NULL" + ")";
+        String CREATE_BODY_EXERCISES_TABLE = "CREATE TABLE " + TABLE_BODY_EXERCISES + "(" +
+            KEY_ID + " INTEGER PRIMARY KEY, " +
+            KEY_EXERCISE_ID + " INTEGER NOT NULL, " +
+            KEY_DATE + " DATE NOT NULL, " +
+            KEY_NUM_REPS + " INTEGER NOT NULL, " +
+            KEY_DURATION + " INTEGER NOT NULL" +
+        ")";
 
-        String CREATE_GOALS_TABLE = "CREATE TABLE " + TABLE_GOALS + "("
-                + KEY_EXERCISE_ID + " INTEGER PRIMARY KEY," + KEY_TARGET_REPS + " INTEGER, "
-                + KEY_TARGET_WEIGHT + " INTEGER, " + KEY_TARGET_DISTANCE + " INTEGER, "
-                + KEY_TARGET_DURATION + " INTEGER" + ")";
+        String CREATE_GOALS_TABLE = "CREATE TABLE " + TABLE_GOALS + "(" +
+            KEY_EXERCISE_ID + " INTEGER PRIMARY KEY," +
+            KEY_TARGET_REPS + " INTEGER, " +
+            KEY_TARGET_WEIGHT + " INTEGER, " +
+            KEY_TARGET_DISTANCE + " INTEGER, " +
+            KEY_TARGET_DURATION + " INTEGER" +
+        ")";
 
         db.execSQL(CREATE_EXERCISES_TABLE);
         db.execSQL(CREATE_WEIGHT_EXERCISES_TABLE);
@@ -110,6 +130,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, exercise.getName());
         values.put(KEY_EXERCISE_TYPE, exercise.getExerciseType());
+        values.put(KEY_INCLUDES_INCLINE, exercise.includesIncline() ? 1 : 0);
+        values.put(KEY_INCLUDES_RESISTANCE, exercise.includesResistance() ? 1 : 0);
+
+        Log.d("DEBUG--DB", "Add exercise with incline " + exercise.includesIncline());
+        Log.d("DEBUG--DB", "Add exercise with resistance " + exercise.includesResistance());
 
         db.insert(TABLE_EXERCISES, null, values);
         db.close();
@@ -118,8 +143,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Exercise getExercise(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_EXERCISES, new String[] {KEY_ID, KEY_NAME, KEY_EXERCISE_TYPE}, KEY_ID + "=?",
-                new String[] {String.valueOf(id)}, null, null, null, null);
+        Cursor cursor = db.query(
+                TABLE_EXERCISES,
+                new String[] {KEY_ID, KEY_NAME, KEY_EXERCISE_TYPE, KEY_INCLUDES_INCLINE, KEY_INCLUDES_RESISTANCE},
+                KEY_ID + "=?",
+                new String[] {String.valueOf(id)},
+                null, null, null, null
+        );
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -128,8 +158,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int exerciseId = cursor.getInt(0);
         String name = cursor.getString(1);
         String exerciseType = cursor.getString(2);
+        boolean includesIncline;
+        boolean includesResistance;
+        try {
+            includesIncline = (cursor.getInt(3) == 1);
+            includesResistance = (cursor.getInt(4) == 1);
+        } catch(IllegalStateException e) {
+            Log.e("ERROR", e.getMessage());
+            includesIncline = false;
+            includesResistance = false;
+        }
 
-        Exercise exercise = new Exercise(exerciseId, name, exerciseType);
+        Exercise exercise = new Exercise(exerciseId, name, exerciseType, includesIncline, includesResistance);
         db.close();
         return exercise;
     }
@@ -144,7 +184,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Exercise exercise = new Exercise(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String exerciseType = cursor.getString(2);
+                boolean includesIncline;
+                boolean includesResistance;
+                try {
+                    includesIncline = (cursor.getInt(3) == 1);
+                    includesResistance = (cursor.getInt(4) == 1);
+                } catch(IllegalStateException e) {
+                    Log.e("ERROR", e.getMessage());
+                    includesIncline = false;
+                    includesResistance = false;
+                }
+
+                Exercise exercise = new Exercise(id, name, exerciseType, includesIncline, includesResistance);
                 exerciseList.add(exercise);
             } while(cursor.moveToNext());
         }
@@ -168,6 +222,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, exercise.getName());
         values.put(KEY_EXERCISE_TYPE, exercise.getExerciseType());
+        values.put(KEY_INCLUDES_INCLINE, exercise.includesIncline() ? 1 : 0);
+        values.put(KEY_INCLUDES_RESISTANCE, exercise.includesResistance() ? 1 : 0);
 
         return db.update(TABLE_EXERCISES, values, KEY_ID + " = ?",
                 new String[] {String.valueOf(exercise.getId())});
@@ -445,7 +501,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DATE, dateString);
         values.put(KEY_DISTANCE, ce.getDistance());
         values.put(KEY_DURATION, ce.getDuration());
-        values.put(KEY_INCLINATION, ce.getInclination());
+        values.put(KEY_INCLINE, ce.getIncline());
         values.put(KEY_RESISTANCE, ce.getResistance());
 
         db.insert(TABLE_CARDIO_EXERCISES, null, values);
@@ -457,7 +513,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 TABLE_CARDIO_EXERCISES,
-                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINATION, KEY_RESISTANCE},
+                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINE, KEY_RESISTANCE},
                 KEY_ID + "=?",
                 new String[] {String.valueOf(id)},
                 null, null, null, null
@@ -479,10 +535,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         int distance = cursor.getInt(3);
         int duration = cursor.getInt(4);
-        int inclination = cursor.getInt(5);
+        int incline = cursor.getInt(5);
         int resistance = cursor.getInt(6);
 
-        CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, inclination, resistance);
+        CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, incline, resistance);
         db.close();
         return ce;
     }
@@ -495,7 +551,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 TABLE_CARDIO_EXERCISES,
-                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINATION, KEY_RESISTANCE},
+                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINE, KEY_RESISTANCE},
                 KEY_EXERCISE_ID + " = ?",
                 new String[] {String.valueOf(exerciseId)},
                 null, null, null, null
@@ -516,10 +572,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
                 int distance = cursor.getInt(3);
                 int duration = cursor.getInt(4);
-                int inclination = cursor.getInt(5);
+                int incline = cursor.getInt(5);
                 int resistance = cursor.getInt(6);
 
-                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, inclination, resistance);
+                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, incline, resistance);
 
                 cardioExerciseList.add(ce);
             } while(cursor.moveToNext());
@@ -540,7 +596,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 TABLE_CARDIO_EXERCISES,
-                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINATION, KEY_RESISTANCE},
+                new String[] {KEY_ID, KEY_EXERCISE_ID, KEY_DATE, KEY_DISTANCE, KEY_DURATION, KEY_INCLINE, KEY_RESISTANCE},
                 KEY_EXERCISE_ID + " = ? AND " + KEY_DATE + " = ?",
                 new String[] {String.valueOf(exerciseId), dateString},
                 null, null, null, null
@@ -560,10 +616,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
                 int distance = cursor.getInt(3);
                 int duration = cursor.getInt(4);
-                int inclination = cursor.getInt(5);
+                int incline = cursor.getInt(5);
                 int resistance = cursor.getInt(6);
 
-                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, inclination, resistance);
+                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, incline, resistance);
 
                 cardioExerciseList.add(ce);
             } while(cursor.moveToNext());
@@ -596,10 +652,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
                 int distance = cursor.getInt(3);
                 int duration = cursor.getInt(4);
-                int inclination = cursor.getInt(5);
+                int incline = cursor.getInt(5);
                 int resistance = cursor.getInt(6);
 
-                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, inclination, resistance);
+                CardioExercise ce = new CardioExercise(instanceId, exercise, date, distance, duration, incline, resistance);
 
                 cardioExerciseList.add(ce);
             } while(cursor.moveToNext());
@@ -624,7 +680,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_DISTANCE, ce.getDistance());
         values.put(KEY_DURATION, ce.getDuration());
-        values.put(KEY_INCLINATION, ce.getInclination());
+        values.put(KEY_INCLINE, ce.getIncline());
         values.put(KEY_RESISTANCE, ce.getResistance());
 
         return db.update(TABLE_CARDIO_EXERCISES, values, KEY_ID + " = ?", new String[] {String.valueOf(ce.getId())});

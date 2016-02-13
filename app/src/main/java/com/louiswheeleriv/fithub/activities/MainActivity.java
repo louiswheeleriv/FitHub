@@ -16,6 +16,7 @@ import com.louiswheeleriv.fithub.fragments.*;
 import com.louiswheeleriv.fithub.objects.BodyExercise;
 import com.louiswheeleriv.fithub.objects.CardioExercise;
 import com.louiswheeleriv.fithub.objects.WeightExercise;
+import com.louiswheeleriv.fithub.util.DatabaseHandler;
 
 import java.util.Date;
 

@@ -49,6 +49,33 @@
 
         </Spinner>
 
+        <LinearLayout android:id="@+id/linearLayout_include_incline_resistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <CheckBox android:id="@+id/checkbox_includes_incline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:text="@string/text_includes_incline"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"/>
+
+            <CheckBox android:id="@+id/checkbox_includes_resistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:text="@string/text_includes_resistance"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
         <Button android:id="@+id/button_create_exercise_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

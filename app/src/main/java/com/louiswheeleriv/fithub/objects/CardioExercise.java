@@ -4,29 +4,29 @@ import java.util.Date;
 
 public class CardioExercise extends ExerciseInstance {
 
-    private int distance;
+    private double distance;
     private int duration;
-    private int inclination;
+    private int incline;
     private int resistance;
 
-    public CardioExercise(int id, Exercise exercise, Date date, double distance, int duration, int inclination, int resistance) {
+    public CardioExercise(int id, Exercise exercise, Date date, double distance, int duration, int incline, int resistance) {
         super(id, exercise, date);
-        this.distance = ((int) distance*10);
+        this.distance = distance;
         this.duration = duration;
-        this.inclination = inclination;
+        this.incline = incline;
         this.resistance = resistance;
     }
 
-    public CardioExercise(Exercise exercise, Date date, double distance, int duration, int inclination, int resistance) {
+    public CardioExercise(Exercise exercise, Date date, double distance, int duration, int incline, int resistance) {
         super(exercise, date);
-        this.distance = ((int) distance*10);
+        this.distance = distance;
         this.duration = duration;
-        this.inclination = inclination;
+        this.incline = incline;
         this.resistance = resistance;
     }
 
     public double getDistance() {
-        return ((double) (distance/10));
+        return distance;
     }
 
     public void setDistance(double distance) {
@@ -41,12 +41,12 @@ public class CardioExercise extends ExerciseInstance {
         this.duration = duration;
     }
 
-    public int getInclination() {
-        return inclination;
+    public int getIncline() {
+        return incline;
     }
 
-    public void setInclination(int inclination) {
-        this.inclination = inclination;
+    public void setIncline(int incline) {
+        this.incline = incline;
     }
 
     public int getResistance() {
