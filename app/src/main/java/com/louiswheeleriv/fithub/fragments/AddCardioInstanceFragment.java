@@ -3,6 +3,8 @@ package com.louiswheeleriv.fithub.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,15 +76,15 @@ public class AddCardioInstanceFragment extends DialogFragment {
             linearLayoutResistance.setVisibility(View.GONE);
         }
 
+        final EditText editTextDistance = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_distance);
+        final EditText editTextDuration = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_duration);
+        final EditText editTextIncline = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_incline);
+        final EditText editTextResistance = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_resistance);
+
         // Handle click for log button
-        Button logButton = (Button) rootView.findViewById(R.id.button_create_cardio_instance);
+        final Button logButton = (Button) rootView.findViewById(R.id.button_create_cardio_instance);
         logButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                EditText editTextDistance = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_distance);
-                EditText editTextDuration = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_duration);
-                EditText editTextIncline = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_incline);
-                EditText editTextResistance = (EditText) rootView.findViewById(R.id.editText_create_cardio_instance_resistance);
-
                 double distance = Double.parseDouble(editTextDistance.getText().toString());
                 int duration = Integer.parseInt(editTextDuration.getText().toString());
 
@@ -110,6 +112,34 @@ public class AddCardioInstanceFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        // Ensure log button is only enabled if
+        // appropriate fields have been filled out
+        TextWatcher watcher= new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (!editTextDistance.getText().toString().isEmpty() &&
+                        !editTextDuration.getText().toString().isEmpty()) {
+
+                    if ((!exercise.includesIncline() || !editTextIncline.getText().toString().isEmpty()) &&
+                            (!exercise.includesResistance() || !editTextResistance.getText().toString().isEmpty())) {
+
+                        logButton.setEnabled(true);
+                        return;
+                    }
+                }
+
+                if (logButton.isEnabled()) {
+                    logButton.setEnabled(false);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
+
+        editTextDistance.addTextChangedListener(watcher);
+        editTextDuration.addTextChangedListener(watcher);
+        editTextIncline.addTextChangedListener(watcher);
+        editTextResistance.addTextChangedListener(watcher);
 
         // Handle back button
         rootView.setOnKeyListener(new View.OnKeyListener() {

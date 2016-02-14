@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -65,13 +67,13 @@ public class AddWeightInstanceFragment extends DialogFragment {
         TextView textViewExerciseName = (TextView) rootView.findViewById(R.id.textView_create_weight_instance_name);
         textViewExerciseName.setText(exercise.getName());
 
+        final EditText editTextWeight = (EditText) rootView.findViewById(R.id.editText_create_weight_instance_weight);
+        final EditText editTextNumReps = (EditText) rootView.findViewById(R.id.editText_create_weight_instance_numReps);
+
         // Handle click for log button
-        Button logButton = (Button) rootView.findViewById(R.id.button_create_weight_instance);
+        final Button logButton = (Button) rootView.findViewById(R.id.button_create_weight_instance);
         logButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                EditText editTextWeight = (EditText) rootView.findViewById(R.id.editText_create_weight_instance_weight);
-                EditText editTextNumReps = (EditText) rootView.findViewById(R.id.editText_create_weight_instance_numReps);
-
                 int weight = Integer.parseInt(editTextWeight.getText().toString());
                 int numReps = Integer.parseInt(editTextNumReps.getText().toString());
 
@@ -85,6 +87,28 @@ public class AddWeightInstanceFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        // Ensure log button is only enabled if
+        // appropriate fields have been filled out
+        TextWatcher watcher= new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (!editTextWeight.getText().toString().isEmpty() &&
+                    !editTextNumReps.getText().toString().isEmpty()) {
+
+                    logButton.setEnabled(true);
+                    return;
+                }
+
+                if (logButton.isEnabled()) {
+                    logButton.setEnabled(false);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
+
+        editTextWeight.addTextChangedListener(watcher);
+        editTextNumReps.addTextChangedListener(watcher);
 
         // Handle back button
         rootView.setOnKeyListener(new OnKeyListener() {

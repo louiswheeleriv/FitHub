@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -53,20 +55,20 @@ public class CreateExerciseFragment extends Fragment {
         db = new DatabaseHandler(getActivity());
 
         // Handle EditText events
-        final EditText exerciseNameEditText = (EditText) rootView.findViewById(R.id.edit_text_exercise_name);
+        final EditText editTextExerciseName = (EditText) rootView.findViewById(R.id.edit_text_exercise_name);
 
-        exerciseNameEditText.setOnClickListener(new EditText.OnClickListener() {
+        editTextExerciseName.setOnClickListener(new EditText.OnClickListener() {
             // Show the cursor when the EditText is clicked
             public void onClick(View v) {
-                exerciseNameEditText.setCursorVisible(true);
+                editTextExerciseName.setCursorVisible(true);
             }
         });
 
-        exerciseNameEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        editTextExerciseName.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             // Remove the cursor when done typing
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    exerciseNameEditText.setCursorVisible(false);
+                    editTextExerciseName.setCursorVisible(false);
                 }
                 return false;
             }
@@ -107,10 +109,10 @@ public class CreateExerciseFragment extends Fragment {
         }
 
         // Finish and save exercise button listener
-        Button finishExerciseButton = (Button) rootView.findViewById(R.id.button_create_exercise_finish);
-        finishExerciseButton.setOnClickListener(new Button.OnClickListener() {
+        final Button buttonCreate = (Button) rootView.findViewById(R.id.button_create_exercise_finish);
+        buttonCreate.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                String exName = exerciseNameEditText.getText().toString();
+                String exName = editTextExerciseName.getText().toString();
                 String exType = exerciseTypeSpinner.getSelectedItem().toString();
                 boolean includesIncline;
                 boolean includesResistance;
@@ -142,6 +144,26 @@ public class CreateExerciseFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
             }
         });
+
+        // Ensure log button is only enabled if
+        // appropriate fields have been filled out
+        TextWatcher watcher= new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (!editTextExerciseName.getText().toString().isEmpty()) {
+
+                    buttonCreate.setEnabled(true);
+                    return;
+                }
+
+                if (buttonCreate.isEnabled()) {
+                    buttonCreate.setEnabled(false);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
+
+        editTextExerciseName.addTextChangedListener(watcher);
 
         return rootView;
     }

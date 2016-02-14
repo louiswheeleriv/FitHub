@@ -133,9 +133,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_INCLUDES_INCLINE, exercise.includesIncline() ? 1 : 0);
         values.put(KEY_INCLUDES_RESISTANCE, exercise.includesResistance() ? 1 : 0);
 
-        Log.d("DEBUG--DB", "Add exercise with incline " + exercise.includesIncline());
-        Log.d("DEBUG--DB", "Add exercise with resistance " + exercise.includesResistance());
-
         db.insert(TABLE_EXERCISES, null, values);
         db.close();
     }
@@ -378,8 +375,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String dateString = df.format(dateSelected);
-
-        Log.d("DEBUG", "DB: querying with dateString ("+dateString+")");
 
         SQLiteDatabase db = this.getWritableDatabase();
 

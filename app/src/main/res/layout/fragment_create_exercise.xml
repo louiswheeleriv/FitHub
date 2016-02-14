@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/text_create_exercise_finish"
+            android:enabled="false"
             style="@style/orangeButton"/>
 
     </LinearLayout>

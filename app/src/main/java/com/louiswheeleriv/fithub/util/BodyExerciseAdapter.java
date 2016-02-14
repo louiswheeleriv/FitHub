@@ -47,8 +47,22 @@ public class BodyExerciseAdapter extends BaseAdapter {
         }
         TextView textViewNumReps = (TextView) vi.findViewById(R.id.list_item_num_reps);
         TextView textViewDuration = (TextView) vi.findViewById(R.id.list_item_duration);
-        textViewNumReps.setText(String.valueOf(data.get(position).getNumReps()));
-        textViewDuration.setText(String.valueOf(data.get(position).getDuration()));
+
+        int numReps = data.get(position).getNumReps();
+        int duration = data.get(position).getDuration();
+
+        if (numReps > 0) {
+            textViewNumReps.setText(String.valueOf(numReps));
+        } else {
+            textViewNumReps.setText("n/a");
+        }
+
+        if (duration > 0) {
+            textViewDuration.setText(String.valueOf(duration));
+        } else {
+            textViewDuration.setText("n/a");
+        }
+
         return vi;
     }
 

@@ -3,6 +3,8 @@ package com.louiswheeleriv.fithub.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,15 +57,18 @@ public class AddBodyInstanceFragment extends DialogFragment {
 
         db = new DatabaseHandler(getActivity());
 
+        final EditText editTextNumReps = (EditText) rootView.findViewById(R.id.editText_create_body_instance_numReps);
+        final EditText editTextDuration = (EditText) rootView.findViewById(R.id.editText_create_body_instance_duration);
+
         // Handle click for log button
-        Button logButton = (Button) rootView.findViewById(R.id.button_create_body_instance);
+        final Button logButton = (Button) rootView.findViewById(R.id.button_create_body_instance);
         logButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                EditText editTextNumReps = (EditText) rootView.findViewById(R.id.editText_create_body_instance_numReps);
-                EditText editTextDuration = (EditText) rootView.findViewById(R.id.editText_create_body_instance_duration);
+                String numRepsString = editTextNumReps.getText().toString();
+                String durationString = editTextDuration.getText().toString();
 
-                int numReps = Integer.parseInt(editTextNumReps.getText().toString());
-                int duration = Integer.parseInt(editTextDuration.getText().toString());
+                int numReps = (!numRepsString.isEmpty()) ? Integer.parseInt(numRepsString) : 0;
+                int duration = (!durationString.isEmpty()) ? Integer.parseInt(durationString) : 0;
 
                 exercise = db.getExercise(exerciseId);
 
@@ -75,6 +80,28 @@ public class AddBodyInstanceFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        // Ensure log button is only enabled if
+        // appropriate fields have been filled out
+        TextWatcher watcher= new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (!editTextNumReps.getText().toString().isEmpty() ||
+                    !editTextDuration.getText().toString().isEmpty()) {
+
+                    logButton.setEnabled(true);
+                    return;
+                }
+
+                if (logButton.isEnabled()) {
+                    logButton.setEnabled(false);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
+
+        editTextNumReps.addTextChangedListener(watcher);
+        editTextDuration.addTextChangedListener(watcher);
 
         // Handle back button
         rootView.setOnKeyListener(new View.OnKeyListener() {
